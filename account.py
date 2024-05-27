@@ -6,7 +6,7 @@ import requests
 
 # Initialize Firebase app and Firestore client
 cred = credentials.Certificate("mindmate-fb723-f0f9ea4f609c.json")
-# firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 def app():
