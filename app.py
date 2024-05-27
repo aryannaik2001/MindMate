@@ -76,12 +76,11 @@ def handle_userinput(user_question, session, user_email):
         return
 
     response = conversation_chain({'question': user_question})
-    chat_history = response['chat_history']
-    st.session_state.sessions[session]['chat_history'] += chat_history
+    st.session_state.sessions[session]['chat_history'] = response['chat_history']
 
     save_chat_history(user_email, session, st.session_state.sessions[session]['chat_history'])
 
-    for i, message in enumerate(chat_history):
+    for i, message in enumerate(st.session_state.sessions[session]['chat_history']):
         if i % 2 == 0:
             st.write(user_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
         else:
@@ -121,12 +120,9 @@ def main():
 
             st.session_state.sessions[session_name] = {
                 'conversation': get_conversation_chain(vectorstore) if vectorstore else None,
-                'chat_history': [],  # Clear chat history for the new session
+                'chat_history': load_chat_history(user_email, session_name),
                 'pdf_docs': default_documents
             }
-
-            # Save session to Firestore under the user's document
-            save_chat_history(user_email, session_name, [])
 
         session = st.sidebar.selectbox("Select a session:", options=list(st.session_state.sessions.keys()))
 
@@ -162,8 +158,6 @@ def main():
                 st.session_state.sessions[session]['pdf_docs'] = default_documents
 
         st.sidebar.button('Logout', on_click=account.logout)
-
-
 
 if __name__ == '__main__':
     main()
