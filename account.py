@@ -4,8 +4,50 @@ from firebase_admin import credentials, auth, firestore
 import json
 import requests
 
+# CSS styles
+main_css = """
+<style>
+body {
+    background-color: #f8f9fa;
+    font-family: 'Helvetica Neue', Verdana, Arial, sans-serif;
+}
+.stApp {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.st-button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+.st-button:hover {
+    background-color: #0056b3;
+}
+.st-input {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    width: 100%;
+}
+.st-input:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+</style>
+"""
 # Initialize Firebase app and Firestore client
-cred = credentials.Certificate("mindmate-fb723-f0f9ea4f609c.json")
+cred = credentials.Certificate("mindmate-fb723-firebase-adminsdk-9908v-8d3a9b7ffb.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
